@@ -51,7 +51,7 @@ class Ui:
     def stock_page(self):
         tk.Label(self.window , text = "please select a stock" ,bg=self.backround_color,fg='white', font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.40, rely=0.01)
         combo = ttk.Combobox(self.window , values=self.data.stock_list)
-        combo.grid(row = 4 , column=4 , padx=10 , pady=10)
+        combo.grid(relx = 0.45 , rely=0.5)
         
 
 
