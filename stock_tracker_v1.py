@@ -4,18 +4,19 @@ class Data:
     def __init__(self):
         self.stock_list=['Toyota Motor Corporation' , 'HSBC Holdings' , "Apple Inc."]
   
-class Ui ():
+class Ui (tk.Tk):
     def __init__(self , data_source):
-        
+        super().__init__()
         self.data = data_source
         self.window = tk.Tk()
         
         self.window.geometry('1000x700')
         self.window.resizable(False, False)
         
-        self.bar = ttk.Progressbar(self.window, length=300 )
+        self.bar = ttk.Progressbar(self, length=300 )
         self.bar.place(relx = 0.5 , rely = 0.5 , anchor='center')
-        
+        self.frames
+    
         bg_main = "#0f172a"
         self.window.configure(bg=bg_main)
             
@@ -28,23 +29,27 @@ class Ui ():
 
         
         tk.Label(self.window , text="loading current popular stocks..." ,bg =self.backround_color ,fg=self.main_text , font=("Helvetica" , 13  )).place(relx = 0.40, rely =0.45 )
+        self.frames = {}
+        container = tk.Frame(self, bg=self.bg)
+        container.pack(fill="both", expand=True)
         self.load()
-            
-        self.window.mainloop()
-
-    def delete(self):
-        for widget in self.window.winfo_children():
-            widget.destroy()
+        for F in range(Loading_page ,Welcome_page , Stock_page):
+                frame = F( Welcome_page , Stock_page)
+                self.frames[F] = frame
+                frame.tkraise()
+        def delete(self , page):
+            self.frame[page] = frame
+class Loading_page(tk.Frames):
     def load(self , i=0):
-        if i <= 100:
-            self.bar['value'] = i
-            self.window.after(50, self.load, i + 1)
+            if i <= 100:
+                self.bar['value'] = i
+                self.window.after(50, self.load, i + 1)
 
         
-        else:
-            self.delete()
-            ui.welcome(self)
-class Welcome_page():
+            else:
+                self.delete()
+                Ui.welcome(self)
+class Welcome_page(tk.Frame):
     def __init__(self , ui):
         self.ui = ui
     def welcome(self):
@@ -82,4 +87,7 @@ Stock_page = Ui(my_data)
 app = Ui(ui_stock)
 app = Ui(ui)
 app = Ui(my_data)
+Ui.mainloop()
  
+
+
