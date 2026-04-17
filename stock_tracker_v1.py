@@ -1,4 +1,4 @@
-iimport tkinter as tk
+import tkinter as tk
 from tkinter import ttk
 class Data:
     def __init__(self):
@@ -29,7 +29,7 @@ class Ui (tk.Tk):
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
         
-        for F in(Loading_page , Welcome_page):
+        for F in(Loading_page , Welcome_page , Stock_page):
                 frame = F( container , self )
                 self.frames[F] = frame
                 frame.place(relwidth=1, relheight=1)
@@ -62,6 +62,49 @@ class Loading_page(tk.Frame):
 class Welcome_page(tk.Frame):
     def __init__(self , parent , container):
          super().__init__(parent)
+         self.container = container
+         
+         self.main_text= "#e2e8f0"
+         self.second_color= "#94a3b8"
+        
+         self.backround_color = "#0f172a"
+                 
+         self.button_backround = "#3b82f6"
+         self.button_text = "#ffffff" 
+         
+         self.configure(bg=container.backround_color)
+         self.welcome()
+    def welcome(self):
+        tk.Label(self , text = 'welcome'  ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 )).place(relx=0.5 , rely=0)
+        tk.Label(self , text = "please enjoy the StonkTracker3000ProMax" ,bg=self.backround_color,fg=self.main_text, font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.25 , rely=0.09)
+        self.img = tk.PhotoImage(file='stonks.png')
+        try:
+            self.img = self.img.subsample(2, 2)
+            label = tk.Label(self, image=self.img).place(relx=0.54 , rely=0.4 , anchor='center')
+        except:
+            tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").pack(pady=20)
+        
+        tk.Button(self , text="continue" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_page)] ).place(relx=0.45 , rely=0.69)
+class Stock_page(tk.Frame):
+     def __init__(self , parent , container):
+         super().__init__(parent)
+         self.container = container
+         self.main_text= "#e2e8f0"
+         self.second_color= "#94a3b8"
+        
+         self.backround_color = "#0f172a"
+                 
+         self.button_backround = "#3b82f6"
+         self.button_text = "#ffffff" 
+         
+         self.configure(bg=container.backround_color)
+         self.stock_page()
+     def stock_page(self):
+        tk.Label(self , text = "please select a stock" ,bg=self.backround_color,fg='white', font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.40, rely=0.01)
+        combo = ttk.Combobox(self , values=self.container.data.stock_list)
+        combo.place(relx = 0.45 , rely=0.5)
+        
+
 data = Data()
 app = Ui(data)
 app.mainloop()
