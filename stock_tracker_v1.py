@@ -1,9 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
+import requests
 class Data:
     def __init__(self):
         self.stock_list=['Toyota Motor Corporation' , 'HSBC Holdings' , "Apple Inc."]
-  
+        self.api_key = "61a4e7de540944d595cb4a27fcb01a21" 
+        self.url = "https://api.twelvedata.com/price?symbol=AAPL&apikey=61a4e7de540944d595cb4a27fcb01a21"
+        self.params = {
+        "symbol" : "AAPL" ,
+        
+        "apikey" : "61a4e7de540944d595cb4a27fcb01a21" ,
+        
+    }
+
+        response = requests.get(self.url , params=self.params)
+        self.stock_data = response.json()
+
 class Ui (tk.Tk):
     def __init__(self , data_source):
         super().__init__()
@@ -29,7 +41,7 @@ class Ui (tk.Tk):
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
         
-        for F in(Loading_page , Welcome_page , Stock_page):
+        for F in(Loading_page , Welcome_page , Stock_page , Stock_prices):
                 frame = F( container , self )
                 self.frames[F] = frame
                 frame.place(relwidth=1, relheight=1)
@@ -103,10 +115,27 @@ class Stock_page(tk.Frame):
         tk.Label(self , text = "please select a stock" ,bg=self.backround_color,fg='white', font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.40, rely=0.01)
         combo = ttk.Combobox(self , values=self.container.data.stock_list)
         combo.place(relx = 0.45 , rely=0.5)
+        tk.Button(self , text="continue" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices)] ).place(relx=0.45 , rely=0.69)
+class Stock_prices(tk.Frame):
+     def __init__(self , parent , container):
+         super().__init__(parent)
+         self.container = container
+         self.main_text= "#e2e8f0"
+         self.second_color= "#94a3b8"
         
+         self.backround_color = "#0f172a"
+                 
+         self.button_backround = "#3b82f6"
+         self.button_text = "#ffffff" 
+         
+         self.configure(bg=container.backround_color)
+         self.Prices()
+     def Prices(self):
+        tk.Label(self, text= self.container.data.stock_data, bg="#0f172a", fg="red").place(relx = 0.5 , rely = 0.5)
 
 data = Data()
 app = Ui(data)
 app.mainloop()
+
 
 
