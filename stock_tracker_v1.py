@@ -4,18 +4,25 @@ import requests
 class Data:
     def __init__(self):
         self.stock_list=['Toyota Motor Corporation' , 'HSBC Holdings' , "Apple Inc."]
-        self.api_key = "61a4e7de540944d595cb4a27fcb01a21" 
-        self.url = "https://api.twelvedata.com/price?symbol=AAPL&apikey=61a4e7de540944d595cb4a27fcb01a21"
+        self.api_key = "1b7ee8f5492a45018300391bfd5c7b28" 
+        self.url = "https://api.twelvedata.com/price?symbol=AAPL&apikey=1b7ee8f5492a45018300391bfd5c7b28"
         self.params = {
         "symbol" : "AAPL" ,
         
         "apikey" : "61a4e7de540944d595cb4a27fcb01a21" ,
         
     }
-
-        response = requests.get(self.url , params=self.params)
-        self.stock_data = response.json()
-
+    def Get_stocks(self):
+        try:
+            response = requests.get(self.url , params=self.params)
+            self.stock_data = response.json()
+            self.code = response.status_code
+            if self.code ==200:
+                self.responce = "success loading stocks!"
+            elif self.code>200 or self.code<200:
+                self.responce = "error please try later"
+        except:
+            pass
 class Ui (tk.Tk):
     def __init__(self , data_source):
         super().__init__()
@@ -132,10 +139,9 @@ class Stock_prices(tk.Frame):
          self.Prices()
      def Prices(self):
         tk.Label(self, text= self.container.data.stock_data, bg="#0f172a", fg="red").place(relx = 0.5 , rely = 0.5)
-
+        tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_page)] ).place(relx=0.5 , rely=0.69)
+        tk.Label(self, text= self.container.data.responce, bg="#0f172a", fg="red").place(relx = 0.5 , rely = 0)
 data = Data()
 app = Ui(data)
 app.mainloop()
-
-
 
