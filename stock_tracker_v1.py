@@ -5,18 +5,18 @@ class Data:
     def __init__(self):
         self.stock_list=['Toyota Motor Corporation' , 'HSBC Holdings' , "Apple Inc."]
         self.api_key = "61a4e7de540944d595cb4a27fcb01a21" 
-        self.url = "https://api.twelvedata.com/price?symbol=AAPL&apikey=61a4e7de540944d595cb4a27fcb01a21"
+        self.url = "https://api.twelvedata.com/price?symbol=self.symbol&apikey=61a4e7de540944d595cb4a27fcb01a21"
         self.params = {
         "symbol" : '' ,
         
         "apikey" : "61a4e7de540944d595cb4a27fcb01a21" ,
         
     }
-
-        response = requests.get(self.url , params=self.params)
-        self.stock_data = response.json()
     def Fetch(self):
-         pass
+
+            response = requests.get(self.url , params=self.params)
+            self.stock_data = response.json()
+         
 class Ui (tk.Tk):
     def __init__(self , data_source):
         super().__init__()
@@ -53,15 +53,21 @@ class Ui (tk.Tk):
         frame.tkraise()
     def Apple(self):
          self.symbol = 'AAPL' 
-         tk.Label(self , text = self.symbol).place(relx = 0.5 , rely=0.5)
+         tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 )).place(relx = 0.5 , rely=0.1)
+         tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page)] ).place(relx=0.45 , rely=0.80)        
          print(self.symbol)
     def Google(self):
          self.symbol = 'GOOGL'
-         tk.Label(self , text = self.symbol).place(relx = 0.5 , rely=0.5)
+         tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 )).place(relx = 0.5 , rely=0.1)
+         tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page)] ).place(relx=0.45 , rely=0.80)
          print(self.symbol)
+    
     def Toyota(self):
          self.symbol ="TM"
-         tk.Label(self , text = self.symbol).place(relx = 0.5 , rely=0.5)
+         tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 )).place(relx = 0.5 , rely=0.1)
+        
+         tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page)] ).place(relx=0.45 , rely=0.80)
+         
          print(self.symbol)
 class Loading_page(tk.Frame):
     def __init__(self , parent , container):
@@ -129,7 +135,7 @@ class Stock_page(tk.Frame):
         tk.Button(self , text="apple" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Apple()]).place(relx=0.45 , rely=0.60)
         
         tk.Button(self , text='google' ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Google()] ).place(relx=0.40 , rely=0.69)
-        tk.Button(self , text="toyota" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Toyota()] ).place(relx=0.45 , rely=0.80)
+        tk.Button(self , text="toyota" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Toyota() ] ).place(relx=0.45 , rely=0.80)
 class Stock_prices(tk.Frame):
      def __init__(self , parent , container):
          super().__init__(parent)
@@ -149,6 +155,5 @@ class Stock_prices(tk.Frame):
 data = Data()
 app = Ui(data)
 app.mainloop()
-
 
 
