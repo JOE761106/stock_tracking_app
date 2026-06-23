@@ -148,8 +148,8 @@ class Welcome_page(tk.Frame):
     def welcome(self):
         tk.Label(self , text = 'welcome'  ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 )).place(relx=0.5 , rely=0)
         tk.Label(self , text = "please enjoy the StonkTracker3000ProMax" ,bg=self.backround_color,fg=self.main_text, font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.25 , rely=0.09)
-        self.img = tk.PhotoImage(file='stonks.png')
         try:
+            self.img = tk.PhotoImage(file='stonks.png')
             self.img = self.img.subsample(2, 2)
             label = tk.Label(self, image=self.img).place(relx=0.54 , rely=0.4 , anchor='center')
         except:
