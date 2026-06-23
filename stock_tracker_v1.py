@@ -3,20 +3,32 @@ from tkinter import ttk
 import requests
 class Data:
     def __init__(self):
-        self.stock_list=['Toyota Motor Corporation' , 'HSBC Holdings' , "Apple Inc."]
-        self.api_key = "YOUR_API_KEY" 
+        
+        self.symbol=''
+        self.api_key = "API_KEY" 
         self.url = "https://api.twelvedata.com/price?symbol=self.symbol&apikey=API_KEY"
-        self.params = {
-        "symbol" : '' ,
-        
-        "apikey" : "61a4e7de540944d595cb4a27fcb01a21" ,
-        
-    }
-    def Fetch(self):
 
-            response = requests.get(self.url , params=self.params)
+    def Fetch_google(self):
+            self.url = "https://api.twelvedata.com/price?symbol=GOOGL&apikey=API_KEY"
+            self.symbol = "GOOGL"
+            response = requests.get(self.url , self.symbol)
             self.stock_data = response.json()
-         
+            print(self.stock_data)
+    def Fetch_apple(self):
+            self.url = "https://api.twelvedata.com/price?symbol=AAPL&apikey=API_KEY"
+            self.symbol = "AAPL"
+            response = requests.get(self.url , self.symbol)
+            self.stock_data = response.json()
+            print(self.stock_data)
+           
+    def Fetch_toyota(self):
+            self.url = "https://api.twelvedata.com/price?symbol=TM&apikey=API_KEY"
+            self.symbol = "TM"
+            response = requests.get(self.url , self.symbol)
+            self.stock_data = response.json()
+            
+            print(self.stock_data)
+
 class Ui (tk.Tk):
     def __init__(self , data_source):
         super().__init__()
@@ -53,41 +65,49 @@ class Ui (tk.Tk):
         frame.tkraise()
     #displays label thats says the symbol and back button of the stocks e.g user chose google-->self.symbol=GOOGL
     def Apple(self):
+         self.data.Fetch_apple()
          self.symbol = 'AAPL' 
          self.apple_txt=tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
          self.apple_txt.place(relx = 0.5 , rely=0.1)
-         
+         self.apple_stock_txt =tk.Label(self , text = "stock:" +str(self.data.stock_data) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
+         self.apple_stock_txt.place(relx = 0.5 , rely=0.5)
          self.apple_button = tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) ,  self.Forget_apple()] )
          self.apple_button.place(relx=0.45 , rely=0.80)        
          print(self.symbol)
     def Google(self):
+         self.data.Fetch_google()
          self.symbol = 'GOOGL'
          self.google_txt =tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
          self.google_txt.place(relx = 0.5 , rely=0.1)
-         
+         self.google_stock_txt =tk.Label(self , text = "stock:" +str(self.data.stock_data) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
+         self.google_stock_txt.place(relx = 0.5 , rely=0.5)
          self.google_button = tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) , self.Forget_google()] )
          self.google_button.place(relx=0.45 , rely=0.80)
          print(self.symbol)
-    
+         
+         
+         
     def Toyota(self):
+         self.data.Fetch_toyota()
          self.symbol ="TM"
          self.toyota_txt =tk.Label(self , text = "stock:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
          self.toyota_txt.place(relx = 0.5 , rely=0.1)
-         
+         self.toyota_stock_txt =tk.Label(self , text = "stock:" +str(self.data.stock_data) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
+         self.toyota_stock_txt.place(relx = 0.5 , rely=0.5)
          self.toyota_button =tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) , self.Forget_toyota()] )
          self.toyota_button.place(relx=0.45 , rely=0.80)
     #makes it so that the labels and buttons wont last after clicking back on the stock prices screen
     def Forget_toyota(self):
-         self.toyota_txt.config(text="")      
-         
+         self.toyota_txt.place_forget()     
+         self.toyota_stock_txt.place_forget
          self.toyota_button.place_forget()
     def Forget_google(self):
-         self.google_txt.config(text="")      
-         
+         self.google_txt.place_forget()   
+         self.google_stock_txt.place_forget()
          self.google_button.place_forget()
     def Forget_apple(self):
-         self.apple_txt.config(text="")      
-         
+         self.apple_txt.place_forget()     
+         self.apple_stock_txt.place_forget()
          self.apple_button.place_forget()
     ###finishes here
 class Loading_page(tk.Frame):
