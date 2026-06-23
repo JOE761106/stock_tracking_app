@@ -99,7 +99,7 @@ class Ui (tk.Tk):
     #makes it so that the labels and buttons wont last after clicking back on the stock prices screen
     def Forget_toyota(self):
          self.toyota_txt.place_forget()     
-         self.toyota_stock_txt.place_forget
+         self.toyota_stock_txt.place_forget()
          self.toyota_button.place_forget()
     def Forget_google(self):
          self.google_txt.place_forget()   
