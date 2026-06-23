@@ -11,3 +11,4 @@ hello this is the first version of the stock tracker it will include:
 needed packages:
   requests
   tiknter 
+please put all the images and the file in one folder to be able to load the img there
