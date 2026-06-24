@@ -153,7 +153,7 @@ class Welcome_page(tk.Frame):
             self.img = self.img.subsample(2, 2)
             label = tk.Label(self, image=self.img).place(relx=0.54 , rely=0.4 , anchor='center')
         except:
-            tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").pack(pady=20)
+            tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
         
         tk.Button(self , text="continue" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_page)] ).place(relx=0.45 , rely=0.69)
 class Stock_page(tk.Frame):
