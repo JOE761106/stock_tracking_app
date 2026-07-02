@@ -11,7 +11,6 @@ class Data:
             response = requests.get(self.url)
             self.fitgirl_repacks_coin = response.json()
             self.fitgirl_repacks_coin_remove_dict = response.json()
-
             self.fitgirl_repacks_coin = self.fitgirl_repacks_coin_remove_dict['fitgirl-repacks']['usd']
             self.fitgirl_repacks_coin = f"${self.fitgirl_repacks_coin:.8f}"
             print(self.fitgirl_repacks_coin)
@@ -85,34 +84,50 @@ class Ui (tk.Tk):
          self.data.Fetch_trump()
          self.symbol = 'TRUMP COIN' 
          self.trump_coin_txt=tk.Label(self , text = "MEME COIN:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
-         self.trump_coin_txt.place(relx = 0.37 , rely=0.1)
+         self.trump_coin_txt.place(relx = 0.37 , rely=0.05)
          
          self.trump_coin_price_txt =tk.Label(self , text = "PRICE:" +str(self.data.trump_coin) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
-         self.trump_coin_price_txt.place(relx = 0.4 , rely=0.5)
+         self.trump_coin_price_txt.place(relx = 0.4 , rely=0.67)
          
-         self.trump_coin_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.data.Fetch_trump() ] )
-         self.trump_coin_refresh_button.place(relx=0.43 , rely=0.72)        
+         self.trump_coin_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda: [self.data.Fetch_trump(), self.trump_coin_price_txt.config(text="PRICE:" + str(self.data.trump_coin))] )
+         self.trump_coin_refresh_button.place(relx=0.43 , rely=0.82)        
              
          self.trump_coin_back_button = tk.Button(self , text="BACK" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) ,  self.Forget_trump_coin()] )
-         self.trump_coin_back_button.place(relx=0.45 , rely=0.80)        
+         self.trump_coin_back_button.place(relx=0.45 , rely=0.90)        
          print(self.symbol)
+         self.img = tk.PhotoImage(file='stonks.png')
+         try:
+                    self.img = self.img.subsample(2, 2)
+                    self.display_img = tk.Label(self, image=self.img)
+                    self.display_img.place(relx=0.54 , rely=0.4 , anchor='center')
+         except:
+                    self.display_img =tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
+                    self.display_img.place(relx=0.5 , rely=0.5)
     def Fitgirl_repacks_coin_page(self):
          self.data.Fetch_fitgirl_repacks()
          self.symbol = 'FITGIRL_REPACKS'
          
          self.fitgirl_repacks_coin_txt =tk.Label(self , text = "MEME COIN:" +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
-         self.fitgirl_repacks_coin_txt.place(relx = 0.37 , rely=0.1)
+         self.fitgirl_repacks_coin_txt.place(relx = 0.37 , rely=0.05)
          
          self.fitgirl_repacks_coin_price =tk.Label(self , text = "PRICE:" +str(self.data.fitgirl_repacks_coin) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
-         self.fitgirl_repacks_coin_price.place(relx = 0.4 , rely=0.5)
+         self.fitgirl_repacks_coin_price.place(relx = 0.4 , rely=0.67)
          
-         self.fitgirl_repacks_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[] )
-         self.fitgirl_repacks_refresh_button.place(relx=0.43 , rely=0.72)        
+         self.fitgirl_repacks_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda: [self.data.Fetch_fitgirl_repacks(), self.fitgirl_repacks_coin_price.config(text="PRICE:" + str(self.data.fitgirl_repacks_coin))] )
+                  
+         self.fitgirl_repacks_refresh_button.place(relx=0.43 , rely=0.82)        
          
          self.fitgirl_repacks_back_button = tk.Button(self , text="BACK" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) , self.Forget_fitgirl_repacks()] )
-         self.fitgirl_repacks_back_button.place(relx=0.45 , rely=0.80)
+         self.fitgirl_repacks_back_button.place(relx=0.45 , rely=0.90)
          print(self.symbol)
-         
+         self.img = tk.PhotoImage(file='stonks.png')
+         try:
+            self.img = self.img.subsample(2, 2)
+            self.display_img = tk.Label(self, image=self.img)
+            self.display_img.place(relx=0.54 , rely=0.4 , anchor='center')
+         except:
+            self.display_img=tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
+            self.display_img.place(relx=0.54 , rely=0.4)
          
          
     def Pepe_coin_page(self):
@@ -120,19 +135,27 @@ class Ui (tk.Tk):
          self.symbol ="PEPE THE FROG"
          
          self.pepe_coin_txt =tk.Label(self , text = "MEME COIN: " +str(self.symbol) ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
-         self.pepe_coin_txt.place(relx = 0.37 , rely=0.1)
+         self.pepe_coin_txt.place(relx = 0.37 , rely=0.05)
          
          self.pepe_coin_price =tk.Label(self , text = "PRICE:" +str(self.data.pepe_coin) ,fg='white',bg='black' ,font=("Space Grotesk" , 20 ))
-         self.pepe_coin_price.place(relx = 0.4 , rely=0.5)
+         self.pepe_coin_price.place(relx = 0.4 , rely=0.67)
          
-         self.pepe_coin_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[] )
-         self.pepe_coin_refresh_button.place(relx=0.43 , rely=0.72)        
+         self.pepe_coin_refresh_button = tk.Button(self , text="REFRESH" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda: [self.data.Fetch_pepe(), self.pepe_coin_price.config(text="PRICE:" + str(self.data.pepe_coin))] )
+         self.pepe_coin_refresh_button.place(relx=0.43 , rely=0.82)        
          
          self.pepe_coin_back_button =tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) , self.Forget_pepe_coin()] )
-         self.pepe_coin_back_button.place(relx=0.45 , rely=0.80)
+         self.pepe_coin_back_button.place(relx=0.45 , rely=0.90)
+         self.img = tk.PhotoImage(file='stonks.png')
+         try:
+            self.img = self.img.subsample(2, 2)
+            self.display_img = tk.Label(self, image=self.img)
+            self.display_img.place(relx=0.54 , rely=0.4 , anchor='center')
+         except:
+            self.display_img=tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
+            self.display_img.place(relx=0.54 , rely=0.4)
     #makes it so that the labels and buttons wont last after clicking back on the stock prices screen
     def Forget_pepe_coin(self):
-         
+         self.display_img.place_forget()
          self.pepe_coin_txt.place_forget()     
          
          self.pepe_coin_price.place_forget()
@@ -142,7 +165,7 @@ class Ui (tk.Tk):
          self.pepe_coin_refresh_button.place_forget()
     
     def Forget_fitgirl_repacks(self):
-         
+         self.display_img.place_forget()
          self.fitgirl_repacks_back_button.place_forget()
          
          self.fitgirl_repacks_coin_price.place_forget()   
@@ -152,7 +175,7 @@ class Ui (tk.Tk):
          self.fitgirl_repacks_coin_txt.place_forget()
     def Forget_trump_coin(self):
          self.trump_coin_back_button.place_forget() 
-         
+         self.display_img.place_forget()
          self.trump_coin_txt.place_forget()     
          
          self.trump_coin_price_txt.place_forget()
@@ -200,9 +223,9 @@ class Welcome_page(tk.Frame):
         self.img = tk.PhotoImage(file='stonks.png')
         try:
             self.img = self.img.subsample(2, 2)
-            label = tk.Label(self, image=self.img).place(relx=0.54 , rely=0.4 , anchor='center')
+            self.display_img = tk.Label(self, image=self.img).place(relx=0.54 , rely=0.4 , anchor='center')
         except:
-            tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
+            tk.Label(self, text="your img is missing", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
         
         tk.Button(self , text="continue" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_page)] ).place(relx=0.45 , rely=0.69)
 class Stock_page(tk.Frame):
@@ -223,23 +246,23 @@ class Stock_page(tk.Frame):
             self.fitgirl_img = tk.PhotoImage(file='fitgirl.png')
             try:
                 self.fitgirl_img = self.fitgirl_img.subsample(7, 7)
-                self.label = tk.Label(self, image=self.fitgirl_img).place(relx=0.84 , rely=0.73 , anchor='center')
+                self.display_image = tk.Label(self, image=self.fitgirl_img).place(relx=0.84 , rely=0.73 , anchor='center')
             except:
-                tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
+                tk.Label(self, text="your img is missing", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
             
             self.pepe_img = tk.PhotoImage(file='pepe.png')
             try:
                 self.pepe_img = self.pepe_img.subsample(8, 8)
-                self.label = tk.Label(self, image=self.pepe_img).place(relx=0.67 , rely=0.83 , anchor='center')
+                self.display_img = tk.Label(self, image=self.pepe_img).place(relx=0.67 , rely=0.83 , anchor='center')
             except:
-                tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
+                tk.Label(self, text="your img is missing", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
             
             self.trump_img = tk.PhotoImage(file='trump.png')
             try:
                 self.trump_img = self.trump_img.subsample(9, 9)
-                self.label = tk.Label(self, image=self.trump_img).place(relx=0.7 , rely=0.62 , anchor='center')
+                self.display_img = tk.Label(self, image=self.trump_img).place(relx=0.7 , rely=0.62 , anchor='center')
             except:
-                tk.Label(self, text="[image missing]", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
+                tk.Label(self, text="your img is missing ", bg="#0f172a", fg="red").place(relx=0.5 , rely=0.5)
                      
             self.stock_page()
                         # 1. Create the outer "Border" frame (this sets the highlight color)
@@ -248,7 +271,7 @@ class Stock_page(tk.Frame):
      def stock_page(self):
         tk.Label(self , text = "please select a stock" ,bg=self.backround_color,fg='white', font = ('Space Grotesk' , 20 , 'bold')).place(relx = 0.40, rely=0.01)
         
-        tk.Button(self , text="TRUMP COIN" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Trump_coin_page()]).place(relx=0.42 , rely=0.60)
+        tk.Button(self , text="TRUMP COIN" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Trump_coin_page() ]).place(relx=0.42 , rely=0.60)
         
         tk.Button(self , text='FITGIRL_REPACKS COIN' ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Fitgirl_repacks_coin_page()] ).place(relx=0.43 , rely=0.69)
         tk.Button(self , text="PEPE COIN" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Pepe_coin_page() ] ).place(relx=0.45 , rely=0.80)
@@ -271,6 +294,9 @@ class Stock_prices(tk.Frame):
 data = Data()
 app = Ui(data)
 app.mainloop()
+
+
+
 
 
 
