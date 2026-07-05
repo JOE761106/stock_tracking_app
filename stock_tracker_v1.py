@@ -153,7 +153,36 @@ class Ui (tk.Tk):
          except:
             self.display_img=tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
             self.display_img.place(relx=0.54 , rely=0.4)
+    def Cat_coin_page(self):
+         self.cat_coin_txt =tk.Label(self , text = "casper the cat! "  ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
+         self.cat_coin_txt.place(relx = 0.37 , rely=0.05)
+         self.cat_coin_txt2 =tk.Label(self , text = "this is my cat casper i love him! "  ,fg=self.main_text,bg=self.backround_color ,font=("Space Grotesk" , 20 ))
+         self.cat_coin_txt2.place(relx = 0.37 , rely=0.1)
+         self.img = tk.PhotoImage(file='cat.png')
+         try:
+            self.img = self.img.subsample(3, 5)
+            self.display_img = tk.Label(self, image=self.img)
+            self.display_img.place(relx=0.63 , rely=0.4 , anchor='center')
+         except:
+            self.display_img=tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
+            self.display_img.place(relx=0.84 , rely=0.4)
+         self.img2 = tk.PhotoImage(file='casper_cat.png')
+         try:
+            self.img2 = self.img2.subsample(2, 2)
+            self.display_img2 = tk.Label(self, image=self.img2)
+            self.display_img2.place(relx=0.34 , rely=0.4 , anchor='center')
+         except:
+            self.display_img2=tk.Label(self, text="your img is missing", bg="#0f172a", fg="red")
+            self.display_img2.place(relx=0.54 , rely=0.4)
+         self.cat_coin_back_button =tk.Button(self , text="back" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.delete(Stock_page) , self.Forget_cat_coin()] )
+         self.cat_coin_back_button.place(relx=0.45 , rely=0.90)
     #makes it so that the labels and buttons wont last after clicking back on the stock prices screen
+    def Forget_cat_coin(self):
+         self.cat_coin_back_button.place_forget()
+         self.cat_coin_txt.place_forget()
+         self.cat_coin_txt2.place_forget()
+         self.display_img.place_forget()
+         self.display_img2.place_forget()
     def Forget_pepe_coin(self):
          self.display_img.place_forget()
          self.pepe_coin_txt.place_forget()     
@@ -275,6 +304,8 @@ class Stock_page(tk.Frame):
         
         tk.Button(self , text='FITGIRL_REPACKS COIN' ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Fitgirl_repacks_coin_page()] ).place(relx=0.43 , rely=0.69)
         tk.Button(self , text="PEPE COIN" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Pepe_coin_page() ] ).place(relx=0.45 , rely=0.80)
+        tk.Button(self , text="CAT COIN???" ,bg=self.button_backround ,fg=self.button_text , font = ( 'Space Grotesk', 20 , 'bold') , command=lambda:[self.container.delete(Stock_prices) , self.container.Cat_coin_page() ] ).place(relx=0.45 , rely=0.90)
+
 class Stock_prices(tk.Frame):
      def __init__(self , parent , container):
          super().__init__(parent)
@@ -294,6 +325,8 @@ class Stock_prices(tk.Frame):
 data = Data()
 app = Ui(data)
 app.mainloop()
+
+
 
 
 
